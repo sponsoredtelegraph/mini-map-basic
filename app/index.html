@@ -1,0 +1,147 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>Holidays to Australia with Cathay Pacific - map</title>
+    <meta name="description" content="Australia is vast – and so are its attractions. Many people visiting the country for the first time wish they'd experienced it sooner, and here's why">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="DCSext.MLC" content="/travel/life-well-travelled" />
+    <meta name="DCSext.Genre" content="cathay-map"/>
+    <meta name="DCSext.Category" content="life-well-travelled" />
+    <meta name="DCSext.Channel" content="travel" />
+    <meta name="DCSext.Content_Type" content="Index" />
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.1/iframeResizer.contentWindow.min.js"></script>
+    <!-- Adobe analytics scripts -->
+    <script src="//assets.adobedtm.com/71dcbb11123ce6b2e1ce4d47fd79a130aad3fc95/satelliteLib-177113f60f763788009998023cd15615fe2168a2.js"></script>
+    <!-- Google maps api -->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick.css" />
+    <link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick-theme.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+</head>
+
+<div id="mapWrap" class="map">
+    <div class="loader-wrapper">
+        <div class="loader-inner-wrapper">
+            <div class="cssload-thecube">
+                <div class="cssload-cube cssload-c1"></div>
+                <div class="cssload-cube cssload-c2"></div>
+                <div class="cssload-cube cssload-c4"></div>
+                <div class="cssload-cube cssload-c3"></div>
+            </div>
+        </div>
+    </div>
+    <!--[if lt IE 9]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="container">
+        <div class="heading">
+            <h1>Explore Australia in pictures.</h1>
+            <span class="close-gallery">
+                <img src="images/close-button.svg" alt="close gallery">
+            </span>
+        </div>
+        <!-- Dynamic sections -->
+        <div class="sections-wrap">
+            <div id="map" class="animated inFront">
+              <div class="back-to-map gallery-btn"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="map-container">
+                            <div class="infobox-wrapper">
+                                <div id="infobox">
+                                    <div class="img-wrap">
+                                        <span class="close-btn"></span>
+                                        <img src="http://placehold.it/195x130" alt="">
+                                    </div>
+                                    <div class="text-wrap">
+                                        <p>Place 1</p>
+                                        <a id="switchMap" href="#">Read more <span>»</span></a>
+                                    </div>
+                                </div>
+                                <div class="triangle"></div>
+                            </div>
+                            <div id="gmap"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="destinations" class="animated fadeOut full-height">
+                <span class="previous control"></span>
+                <span class="next control"></span>
+                <div class="row full-height">
+                    <div class="col-md-12 full-height">
+                        <div class="details-container full-height">
+                            <div id="carousel" class="map-carousel full-height"></div>
+                            <div id="slideFooter">
+                                <p></p>
+                                <div class="black-box">
+                                    <div class="index"><span id="indexNum"></span><span id="indexTitle"> / 24</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Dynamic sections end -->
+    </div>
+    <script type="text/javascript">
+            // _satellite.pageBottom();
+    </script>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/gsap/src/uncompressed/TweenMax.js"></script>
+    <script src="/bower_components/slick-carousel/slick/slick.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js(.) scripts/plugins.js -->
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/button.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
+    <!-- endbuild -->
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/locations.js"></script>
+    <script src="scripts/markerclusterer.js"></script>
+    <script src="scripts/CustomGoogleMapMarker.js"></script>
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-27821992-78', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+
+</html>

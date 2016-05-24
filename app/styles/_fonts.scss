@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'austin-bold';
+    src: url('fonts/AustinNewsText-Bold.eot?#iefix') format('embedded-opentype'),  
+    url('fonts/AustinNewsText-Bold.otf')  format('opentype'),
+    url('fonts/AustinNewsText-Bold.woff') format('woff'), 
+    url('fonts/AustinNewsText-Bold.ttf')  format('truetype'), 
+    url('fonts/AustinNewsText-Bold.svg#austin-bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'austin-roman';
+    src: url('fonts/AustinNewsText-Roman.eot?#iefix') format('embedded-opentype'),  
+    url('fonts/AustinNewsText-Roman.otf')  format('opentype'),
+    url('fonts/AustinNewsText-Roman.woff') format('woff'), 
+    url('fonts/AustinNewsText-Roman.ttf')  format('truetype'), 
+    url('fonts/AustinNewsText-Roman.svg#austin-roman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
