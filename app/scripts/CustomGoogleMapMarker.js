@@ -44,7 +44,7 @@ if (!Function.prototype.bind) {
                     throw new TypeError("Arguments not optional");
                 }
 
-                prop += ""; // convert prop to string
+                prop += ""; // convert prop to string 
 
                 if (hasOwnProp.call(descriptor, "value")) {
                     if (!lookupGetter.call(obj, prop) && !lookupSetter.call(obj, prop)) {
@@ -218,7 +218,7 @@ function CustomMarker(latlng, map, args) {
 
 var markerClick = false;
 var $indexNum = $('#indexNum');
-var $text = $('#slideFooter p');
+var $text = $('#slideFooter');
 var $indexTitle = $('#indexTitle');
 
 CustomMarker.prototype = new google.maps.OverlayView();
@@ -230,19 +230,18 @@ CustomMarker.prototype.draw = function() {
 
 	var div = this.div;
 
-
 	if (!div) {
 
 		div = this.div = document.createElement('div');
 
 		div.className = 'marker';
-
 		div.style.position = 'absolute';
 		div.style.cursor = 'pointer';
 
 		if (typeof(self.args.marker_id) !== 'undefined') {
 
             /* assign all the data attributes to each marker */
+
 			$(div).attr('data-markerId', self.args.marker_id);
             $(div).attr('data-placeImage', self.args.the_image);
             $(div).attr('data-theTitle', self.args.the_title);
@@ -250,16 +249,40 @@ CustomMarker.prototype.draw = function() {
             $(div).attr('data-the_priceCopy', self.args.the_priceCopy);
             $(div).attr('data-lat', self.latlng.lat());
             $(div).attr('data-lng', self.latlng.lng());
+            $(div).attr('data-size', self.args.the_size);
+            $(div).attr('data-population', self.args.the_population);
+            $(div).attr('data-distance', self.args.the_distance);
+            $(div).attr('data-directions', self.args.the_directions);
+
 		}
 
 		var panes = this.getPanes();
+
 		panes.overlayImage.appendChild(div);
 
         var label = document.createElement("P");
 
-        label.innerHTML = parseInt(self.args.marker_id + 1);
+        label.innerHTML = self.args.the_title;
 
         div.appendChild(label);
+
+        var pin = document.createElement("div");
+
+        pin.className = 'pin';
+
+        div.appendChild(pin);
+
+        var pulse =  document.createElement("div");
+
+        pulse.className = 'pulse';
+
+        div.appendChild(pulse);
+
+        var pulsate =  document.createElement("div");
+
+        pulsate.className = 'pulsate';
+
+        div.appendChild(pulsate);
 
         google.maps.event.addDomListener(div, "click", function(event) {
 
@@ -275,9 +298,14 @@ CustomMarker.prototype.draw = function() {
 
             // Wait 500 ms before fading back in new text values
             setTimeout(function(){
-                $indexTitle.removeClass('fadeOut').addClass('fadeIn');
-                $indexNum.removeClass('fadeOut').addClass('fadeIn').text(parseInt($(div).attr('data-markerId')) + 1);
-                $text.removeClass('fadeOut').addClass('fadeIn').html('<span class="theTitle">'+$(div).attr('data-theTitle') +'</span>'+ $(div).attr('data-theText') + '<a target="_blank" rel="nofollow" href="https://ad.doubleclick.net/ddm/clk/303949059;131217011;u">'+$(div).attr('data-the_priceCopy')+'</a>');
+
+                $text.removeClass('fadeOut').addClass('fadeIn');
+                $text.find('#slide-title').text($(div).attr('data-thetitle'));
+                $text.find('#size').next().text($(div).attr('data-size'));
+                $text.find('#population').next().text($(div).attr('data-population'));
+                $text.find('#distance').next().text($(div).attr('data-distance'));
+                $text.find('#directions').next().text($(div).attr('data-directions'));
+
             }, 300);
 
             /* Marker styling classes */
@@ -298,17 +326,23 @@ CustomMarker.prototype.draw = function() {
 
 
             // Zoom into map
-            mapObject.setZoom(13);
+            mapObject.setZoom(6);
+
+            var lat = self.latlng.lat;
+            var lng =self.latlng.lng;
 
             // Wait until map is idle before triggering the offset change
             var listener = google.maps.event.addListener(mapObject, "idle", function() {
 
                 // Center the map to the marker center plus the pixel offset required
+                // Center the map to the marker center plus the pixel offset required
                 if ($(window).width > 480) {
-                    offsetCenter(self.latlng, -15, - $('.map-container').outerHeight() / 2 + 60);
+                    offsetCenter(self.latlng, -100, - $('.map-container').outerHeight() / 2 + 200, lat, lng);
                 } else {
-                    offsetCenter(self.latlng, + 15, - $('.map-container').outerHeight() / 2 + 30);
+                    offsetCenter(self.latlng, -10, - $('.map-container').outerHeight() / 2 + 170, lat, lng);
                 }
+
+
                 google.maps.event.removeListener(listener);
 
             });
@@ -497,10 +531,12 @@ $('#carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide
         // Get next or previous desired zoom level from data attibutes
         dir === 'left' ? zoomLevel = $('.slick-active').prev().data('zoom') : zoomLevel = $('.slick-active').next().data('zoom');
 
-        mapObject.setZoom(zoomLevel);
+        // Zoom into map
+        mapObject.setZoom(6);
 
         // get the attributes from the relevant marker
         var slideId = nextSlide;
+        console.log(slideId);
         var marker = $("[data-markerId='" + slideId + "']");
         var lat = marker.data('lat');
         var lng = marker.data('lng');
@@ -512,17 +548,25 @@ $('#carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide
 
         // Wait 500 ms before fading back in new text values
         setTimeout(function(){
-            $indexTitle.removeClass('fadeOut').addClass('fadeIn');
-            $indexNum.removeClass('fadeOut').addClass('fadeIn').text(slideId + 1);
-            $text.removeClass('fadeOut').addClass('fadeIn').html('<span class="theTitle">'+marker.attr('data-theTitle') +'</span>'+ marker.attr('data-theText')  + '<a target="_blank" rel="nofollow" href="https://ad.doubleclick.net/ddm/clk/303949059;131217011;u">'+marker.attr('data-the_priceCopy')+'</a>');
+
+            console.log(marker);
+
+            $text.removeClass('fadeOut').addClass('fadeIn');
+            $text.find('#slide-title').text(marker.attr('data-thetitle'));
+            $text.find('#size').next('p').html(marker.attr('data-size'));
+            $text.find('#population').next('p').html(marker.attr('data-population'));
+            $text.find('#distance').next('p').html(marker.attr('data-distance'));
+            $text.find('#directions').next('p').html(marker.attr('data-directions'));
+
         }, 300);
 
         // Center the map to the marker center plus the pixel offset required
         if ($(window).width > 480) {
-            offsetCenter(self.latlng, -15, - $('.map-container').outerHeight() / 2 + 60, lat, lng);
+            offsetCenter(self.latlng, -100, - $('.map-container').outerHeight() / 2 + 200, lat, lng);
         } else {
-            offsetCenter(self.latlng, + 15, - $('.map-container').outerHeight() / 2 + 30, lat, lng);
+            offsetCenter(self.latlng, -10, - $('.map-container').outerHeight() / 2 + 170, lat, lng);
         }
+
 
         marker.siblings(marker).removeClass('active')
         marker.addClass('active');

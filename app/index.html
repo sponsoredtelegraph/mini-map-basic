@@ -4,7 +4,7 @@
 <head>
     <base target="_blank">
     <meta charset="utf-8">
-    <title>Holidays to Australia with Cathay Pacific - map</title>
+    <title>Vodafone mini maps</title>
     <meta name="description" content="Australia is vast – and so are its attractions. Many people visiting the country for the first time wish they'd experienced it sooner, and here's why">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="DCSext.MLC" content="/travel/life-well-travelled" />
@@ -51,15 +51,12 @@
     <![endif]-->
     <div class="container">
         <div class="heading">
-            <h1>Explore Australia in pictures.</h1>
-            <span class="close-gallery">
-                <img src="images/close-button.svg" alt="close gallery">
-            </span>
+            <span><img src="./images/red-icon.svg" alt=""></span>
+            <h1>Select a destination for a guide to its undiscovered highlights</h1>        
         </div>
         <!-- Dynamic sections -->
         <div class="sections-wrap">
             <div id="map" class="animated inFront">
-              <div class="back-to-map gallery-btn"></div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="map-container">
@@ -79,20 +76,24 @@
                             <div id="gmap"></div>
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
-            <div id="destinations" class="animated fadeOut full-height">
+            <div id="destinations" class="animated fadeOut">
                 <span class="previous control"></span>
                 <span class="next control"></span>
                 <div class="row full-height">
                     <div class="col-md-12 full-height">
                         <div class="details-container full-height">
+                            <span class="close-gallery">
+                                <img src="images/close-button.svg" alt="close gallery">
+                            </span>
                             <div id="carousel" class="map-carousel full-height"></div>
                             <div id="slideFooter">
-                                <p></p>
-                                <div class="black-box">
-                                    <div class="index"><span id="indexNum"></span><span id="indexTitle"> / 24</span></div>
-                                </div>
+                                <h3 id="slide-title">Test</h3>
+                                <span id="size">Size: </span><p></p><br>
+                                <span id="population">Population: </span><p></p><br>
+                                <span id="distance">Distance from mainland: </span><p></p><p> miles</p><br>
+                                <span id="directions">How to get there: </span><p></p>
                             </div>
                         </div>
                     </div>
@@ -100,6 +101,13 @@
             </div>
         </div>
         <!-- Dynamic sections end -->
+        <div class="cta">
+            <a href="">
+                <div class="cta-btn">
+                    Discover more untapped destinations
+                </div>
+            </a>
+        </div>                  
     </div>
     <script type="text/javascript">
             // _satellite.pageBottom();

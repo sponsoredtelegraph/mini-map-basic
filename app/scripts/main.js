@@ -18,6 +18,8 @@ var sparkbespoke;
 	    }
 	};
 
+	var theRoute = getUrlParameter('route');
+
 	// Detect Ie9 and older
 	!Modernizr.csstransitions ? browserSpec = 'old' : browserSpec = 'new';
 
@@ -31,9 +33,7 @@ var sparkbespoke;
 		marker,
 		bounds,
 		markerArray = [],
-		//mapStyles = [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}],
-		mapStyles = [{"featureType": "administrative","elementType": "labels","stylers": [{"visibility": "off"}]},{"featureType": "administrative","elementType": "labels.text.fill","stylers": [{"color": "#444444"}]},{"featureType": "landscape","elementType": "all","stylers": [{"color": "#f2f2f2"}]},{"featureType": "landscape","elementType": "geometry","stylers": [{"color": "#ff0000"}]},{"featureType": "landscape","elementType": "geometry.stroke","stylers": [{"color": "#ffffff"}]},{"featureType": "landscape","elementType": "labels","stylers": [{"visibility": "simplified"}]},{"featureType": "landscape.man_made","elementType": "geometry.fill","stylers": [{"saturation": "0"},{"color": "#bd0900"}]},{"featureType": "landscape.natural.terrain","elementType": "geometry","stylers": [{"visibility": "off"}]},{"featureType": "poi","elementType": "all","stylers": [{"visibility": "off"}]},{"featureType": "road","elementType": "all","stylers": [{"saturation": -100},{"lightness": 45}]},{"featureType": "road","elementType": "geometry","stylers": [{"visibility": "on"}]},{"featureType": "road","elementType": "geometry.fill","stylers": [{"hue": "#ff0000"}]},{"featureType": "road","elementType": "geometry.stroke","stylers": [{"color": "#965858"}]},{"featureType": "road","elementType": "labels","stylers": [{"visibility": "off"}]},{"featureType": "road.highway","elementType": "all","stylers": [{"visibility": "simplified"}]},{"featureType": "road.highway","elementType": "labels","stylers": [{"visibility": "off"}]},{"featureType": "road.arterial","elementType": "labels.icon","stylers": [{"visibility": "off"}]},{"featureType": "transit","elementType": "all","stylers": [{"visibility": "off"}]},{"featureType": "transit","elementType": "geometry","stylers": [{"visibility": "off"}]},{"featureType": "water","elementType": "all","stylers": [{"color": "#9ba1a5"},{"visibility": "on"}]}],
-
+		mapStyles = [{featureType:"administrative",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"administrative",elementType:"labels.text.fill",stylers:[{color:"#444444"}]},{featureType:"landscape",elementType:"all",stylers:[{color:"#f2f2f2"}]},{featureType:"landscape",elementType:"geometry",stylers:[{color:"#bc0f00"}]},{featureType:"landscape",elementType:"geometry.stroke",stylers:[{color:"#ffffff"}]},{featureType:"landscape",elementType:"labels",stylers:[{visibility:"simplified"}]},{featureType:"landscape.man_made",elementType:"geometry.fill",stylers:[{saturation:"0"},{color:"#bd0900"}]},{featureType:"landscape.natural.terrain",elementType:"geometry",stylers:[{visibility:"off"}]},{featureType:"poi",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"road",elementType:"all",stylers:[{saturation:-100},{lightness:45}]},{featureType:"road",elementType:"geometry",stylers:[{visibility:"on"}]},{featureType:"road",elementType:"geometry.fill",stylers:[{hue:"#ff0000"}]},{featureType:"road",elementType:"geometry.stroke",stylers:[{color:"#965858"}]},{featureType:"road",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"road.highway",elementType:"all",stylers:[{visibility:"simplified"}]},{featureType:"road.highway",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"road.arterial",elementType:"labels.icon",stylers:[{visibility:"off"}]},{featureType:"transit",elementType:"all",stylers:[{visibility:"off"}]},{featureType:"transit",elementType:"geometry",stylers:[{visibility:"off"}]},{featureType:"water",elementType:"all",stylers:[{color:"#9ba1a5"},{visibility:"on"}]}],
 		data,
 		start,
 		end,
@@ -43,9 +43,24 @@ var sparkbespoke;
 		mc,
 		firstLoad = false,
  		locationsArray,
-	 	route = 'route1',
+	 	route = theRoute,
  		browserSpec,
- 		$closeGallery = $('.close-gallery');
+ 		$closeGallery = $('.close-gallery'),
+ 		isMobile = false;
+
+	$(window).resize(function(event) {
+		if ($(window).width() < 480) {
+			isMobile = true;
+		} else {
+			isMobile = false;
+		}
+	});
+
+	if ($(window).width() < 480) {
+			isMobile = true;
+		} else {
+			isMobile = false;
+		}
 
  	// Initialize the google map
 	function loadMap() {
@@ -59,6 +74,7 @@ var sparkbespoke;
 
 		// Map options
 		var options = {
+
 			streetViewControl: false,
 			scaleControl: false,
 			scrollwheel: true,
@@ -68,11 +84,23 @@ var sparkbespoke;
 			center: new google.maps.LatLng(51.5072,0.1275),
 			styles: mapStyles,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
+
 		};
+
 
 		mapObject = new google.maps.Map(document.getElementById('gmap'), options);
 
 		calcRoute();
+
+		if (isMobile === true) {
+
+			mapObject.setOptions({draggable: false});
+
+		} else {
+
+			mapObject.setOptions({draggable: true});
+
+		}
 
 		//Create the DIV to hold the control and call the ZoomControl() constructor passing in this DIV.
 
@@ -81,6 +109,7 @@ var sparkbespoke;
 
 		zoomControlDiv.index = 1;
 		mapObject.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(zoomControlDiv);
+
 		// Function to set markers depending on map route
 		function calcRoute() {
 			// Refer to the current map we are on e.g 'route1' and create new array using underscore
@@ -133,7 +162,11 @@ var sparkbespoke;
 						the_title:  currentMap[0].checkpoints[i].title,
 						the_image: currentMap[0].checkpoints[i].image,
 						the_priceCopy: currentMap[0].checkpoints[i].priceCopy,
-						the_text: currentMap[0].checkpoints[i].description
+						the_text: currentMap[0].checkpoints[i].description,
+						the_size: currentMap[0].checkpoints[i].size,
+						the_population: currentMap[0].checkpoints[i].population,
+						the_distance: currentMap[0].checkpoints[i].distance,
+						the_directions: currentMap[0].checkpoints[i].directions
 					}
 				);
 
@@ -146,6 +179,21 @@ var sparkbespoke;
 			};
 
 			mapObject.fitBounds(markerBounds);
+
+			if (isMobile) {
+
+				var listener = google.maps.event.addListener(mapObject, "idle", function() {
+
+					console.log(mapObject.getZoom());
+
+					if (mapObject.getZoom() < 6) mapObject.setZoom(4); 
+
+					google.maps.event.removeListener(listener); 
+
+				});
+
+			}
+			
 
 			if ( firstLoad === false ) {
 				createCarousel();
@@ -210,9 +258,23 @@ var sparkbespoke;
 		    	setTimeout(function(){
 		    		$('.marker').removeClass('active');
 		    		mapObject.fitBounds(markerBounds);
+		    		if (isMobile) {
+
+						var listener = google.maps.event.addListener(mapObject, "idle", function() {
+
+							console.log(mapObject.getZoom());
+
+							if (mapObject.getZoom() < 6) mapObject.setZoom(4); 
+
+							google.maps.event.removeListener(listener); 
+
+						});
+
+					}
 		    	}, 300);
 
 		    	if (browserSpec === 'new') {
+
 		    		$closeGallery.removeClass('animated fadeIn inFront').addClass('animated fadeOut');
 		    		$destinations.removeClass('animated fadeIn inFront').addClass('animated fadeOut');
 			    	$destinationsSmall.removeClass('animated fadeIn inFront').addClass('animated fadeOut');
@@ -221,6 +283,7 @@ var sparkbespoke;
 			    	$('#mapWrap').removeClass('destinations small').addClass('map');
 
 		    	} else {
+
 		    		$closeGallery.animate({'opacity': 0}, 400);
 		    		$destinations.removeClass('inFront').animate({'opacity': 0}, 400);
 			    	$destinationsSmall.removeClass('inFront').animate({'opacity': 0}, 400);
@@ -294,7 +357,7 @@ var sparkbespoke;
 			zoomOutButton.style.width = '37px';
 			zoomOutButton.style.height = '36px';
 			/* Change this to be the .png image you want to use */
-			zoomOutButton.style.backgroundImage = 'url(images/zoom-out-icon.svg)';
+			zoomOutButton.style.backgroundImage = 'url(images/zoom-out.svg)';
 			zoomOutButton.style.backgroundColor = //'#056664';
 			controlWrapper.appendChild(zoomOutButton);
 
