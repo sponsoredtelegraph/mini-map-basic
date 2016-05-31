@@ -83,7 +83,8 @@ var sparkbespoke;
 			zoom: 12,
 			center: new google.maps.LatLng(51.5072,0.1275),
 			styles: mapStyles,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			draggable: false
 
 		};
 
